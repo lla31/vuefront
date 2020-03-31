@@ -9,6 +9,15 @@ module.exports = {
                 'views': '@/views',
             }
         }
-    }
+    },
+    /*pluginOptions: {
+        foo: {
+             templateParameters: {
+                   BASE_URL: config.dev.assetsPublicPath + config.dev.assetsSubDirectory
+             }
+        }
+    }*/
+
+
 
 }

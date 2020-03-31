@@ -25,13 +25,13 @@ import login from "@/api/login"
 export default {
   layout: 'sign',
 
-  asyncData({ params, error }) {
+  /*asyncData({ params, error }) {
     return login.login(params.id)
       .then(response => {
         console.log(response.data.data)
         return {data: response.data.data}
       })
-  },
+  },*/
 
   data() {
     return {

@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- 阿里云视频播放器样式 -->
-        <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" >
+        <!--<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" >-->
             <!--:source="视频url"-->
-        <ali-player :vid="vid" :playauth="playAuth" ref="player"></ali-player>
+        <!--<ali-player :vid="vid" :playauth="playAuth" ref="player"></ali-player>-->
         <!--<button @click="play">播放</button>
         <button @click="pause">暂停</button>
         <button @click="replay">重播</button>-->
@@ -17,9 +17,9 @@
         <script type="text/javascript" charset="utf-8" src="https://player.alicdn.com/aliplayer/presentation/js/aliplayercomponents.min.js"/>
        -->
         <!-- 定义播放器dom -->
-        <iframe src="//player.bilibili.com/player.html?aid=61820222&cid=107494801&page=3"
+        <!--<iframe src="//player.bilibili.com/player.html?aid=61820222&cid=107494801&page=3"
                 scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
-                style="width: 600px ;min-height: 350px"> </iframe>
+                style="width: 600px ;min-height: 350px"> </iframe>-->
         <div id="J_prismPlayer" class="prism-player"></div>
     </div>
 </template>
@@ -63,7 +63,6 @@
                 const player = this.$refs.player.instance
                 player && player.replay()
             },
-
 
             getPlayVideoAuth(vid) {
                 vod.getPlayVideoAuth(this.$route.params.vid)

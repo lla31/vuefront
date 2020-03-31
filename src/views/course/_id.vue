@@ -37,7 +37,7 @@
             </section>
             <section class="c-attr-mt">
               <a href="#playvideos" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
-              <span title="添加到我的课程" class="comm-btn c-btn-3" @click="addtocart(courseInfo.id)">添加到我的课程</span>
+              <span title="添加到我的课程" class="comm-btn c-btn-3" @click="backendAddtocart">添加到我的课程</span>
             </section>
           </section>
         </aside>
@@ -112,7 +112,7 @@
                             </a>
                             <ol class="lh-menu-ol" style="display: block;">
                               <li class="lh-menu-second ml30" v-for="(video,index) in chapter.children" :key="index">
-                                <a :href="'/video/'+video.videoSourceId"
+                                <a :href="'/video1/'+video.videoSourceId"
                                 :title="video.title"
                                 target="_blank">
                                   <span class="fr">
@@ -168,6 +168,7 @@
 
 <script>
 import course from "@/api/course"
+import usercenter from "@/api/usercenter";
 export default {
   /*asyncData({ params, error }) {
     return course.getCourseInfoId(params.id)
@@ -194,8 +195,8 @@ export default {
     getCourseInfoId(id){
       course.getCourseInfoId(id)
          .then(response => {
-           console.log(response.data.data.courseInfo)
-              this.courseInfo = response.data.data.courseInfo,
+           //console.log(response.data.data.courseInfo)
+              this.courseInfo = response.data.data.courseInfo
               this.chapterVideoList = response.data.data.chapterVideoList
          })
     },
@@ -212,6 +213,27 @@ export default {
 
       this.$store.commit('addCartList',cartcourse)
       localStorage.setItem("cart",JSON.stringify(this.$store.state.cartList))
+    },
+    //后端实现购物车
+    backendAddtocart(){
+      const cartCourse = {}
+      cartCourse.userId = this.$store.state.storeId
+      cartCourse.courseId = this.$route.params.id
+      usercenter.addOneToMyCourse(cartCourse)
+        .then(resp => {
+          if(resp.data.code === 20000){
+            return this.$message({
+              type: 'success',
+              message: '添加成功，可到我的课程中查看'
+            })
+          }else {
+            return this.$message({
+              type: 'success',
+              message: '您已添加，无需添加多次'
+            })
+          }
+
+        })
     }
 
   }

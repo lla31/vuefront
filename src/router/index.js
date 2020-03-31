@@ -1,20 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+import Login from '../views/login/index'
+import Signup from '../views/login/signup'
+import Video from '../views/video/vid'
+import Video1 from '../views/video/vid1'
+import Home from '../views/home/index'
+
+//import Videotest from '../views/video/video.html'
+
 import Course from '../views/course/index'
 import CourseDetails from '../views/course/_id'
 import Default from '../components/content/default'
 import Article from '../views/article/article'
+import ArticleDetail from '../views/article/id'
 import Qa from '../views/qa/index'
 import Teacher from '../views/teacher/index'
+
 import Usercenter from '../views/usercenter/index'
-import Login from '../views/login/index'
 import UpdatePassword from '../views/usercenter/updatePassword/index'
-import Signup from '../views/login/signup'
 import Mycourse from '../views/usercenter/mycourse/index'
-import Video from '../views/video/vid'
-import ArticleDetail from '../views/article/id'
-import Home from '../views/home/index'
 import Myarticle from '../views/usercenter/myarticle/list'
+import Publishcontent from '../views/usercenter/myarticle/publishcontent'
 
 Vue.use(VueRouter)
 
@@ -24,6 +31,11 @@ const routes = [
     name: 'default',
     redirect: '/home'
   },
+  /*{
+    path: '/videotest',
+    name: 'video',
+    component: Videotest
+  },*/
   {
     path: '/home',
     name: 'home',
@@ -33,6 +45,11 @@ const routes = [
     path: '/video/:id',
     name: 'video',
     component: Video
+  },
+  {
+    path: '/video1/:id',
+    name: 'video1',
+    component: Video1
   },
   {
     path: '/article',
@@ -83,6 +100,11 @@ const routes = [
         path: 'myarticle',
         name: 'myarticle',
         component: Myarticle
+      },
+      {
+        path: 'publishcontent',
+        name: 'publishcontent',
+        component: Publishcontent
       }
     ]
   },

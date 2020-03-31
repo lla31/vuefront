@@ -10,7 +10,7 @@
         </h1>
         <div class="h-r-nsl">
           <ul class="nav">
-            <router-link to="/home" tag="li" active-class="current" exact>
+            <router-link to="/" tag="li" active-class="current" exact>
               <a>首页</a>
             </router-link>
             <router-link :to="{path: '/course'}" tag="li">
@@ -57,12 +57,25 @@
             </li>
 
             <!-- 登录成功后 -->
-            <li v-show="isShow">
-              登录成功，欢迎[{{user.username}}]
+            <!--<li v-show="isShow">
+              欢迎[{{user.username}}]
+              <img src="../../assets/img/logo/touxiang1.png">
               <a href="/">
                 <span class="vam ml2" @click="imitatelogout">退出</span>
               </a>
+            </li>-->
+            <!--借鉴右上角图标显示 开始-->
+            <li v-show="isShow"
+                class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
+              <a href="javascript:;"><i class="iconfont icon-Userselect icon"></i>欢迎，{{user.username}}</a>
+              <div class="msg" v-if="flag">
+                <p @click="toUsercenter()">用户中心</p>
+                <a href="/">
+                  <p class="exit" @click="imitatelogout()">退出</p>
+                </a>
+              </div>
             </li>
+            <!--借鉴右上角图标显示 结束-->
 
             <li
               v-show="isShow"
@@ -170,10 +183,12 @@
   import "@/assets/css/web.css";
   import login from "../../api/login";
 
-
   export default {
     data() {
       return{
+        //右上角用户中心
+        flag: false,
+
         isShow:false,
         isShow2:true,
         user: {}
@@ -184,12 +199,17 @@
         this.isShow = true
         this.isShow2 = false
       }
+
       this.getUserByUserId(this.$store.state.storeId)
     },
     methods: {
+      toUsercenter() {
+        this.$router.push({path:'/usercenter/mycourse'})
+      },
       imitatelogout() {
         this.$store.commit('changeId','')
       },
+
       getUserByUserId(id){
         login.getUserById(id)
                 .then(resp => {
@@ -199,3 +219,31 @@
     }
   };
 </script>
+
+<style scoped>
+  /*右上角用户中心*/
+  .right .icon {
+    margin-right: 6px;
+  }
+  .right .msg {
+    text-align: center;
+    /*position: absolute;
+    top: 60px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;*/
+    border-radius: 2px;
+    border-bottom: 3px solid #0195ff;
+    background-color: #fff;
+  }
+  .right .msg p {
+    height: 40px;
+    line-height: 40px;
+    width: 105px;
+    font: 15px Helvetica;
+  }
+  .right .msg p:hover {
+    background-color: #0195ff;
+  }
+  /*右上角用户中心*/
+</style>

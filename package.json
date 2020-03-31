@@ -11,6 +11,7 @@
     "vue": "^2.6.11",
     "vue-aliplayer": "0.0.8",
     "vue-awesome-swiper": "^2.5.4",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },
@@ -19,6 +20,8 @@
     "@vue/cli-plugin-router": "~4.2.0",
     "@vue/cli-plugin-vuex": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
   }
 }

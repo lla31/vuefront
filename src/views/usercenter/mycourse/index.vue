@@ -1,48 +1,28 @@
 <template>
-    <div>
-      <h1>我的课程有以下这些</h1>
-        <span @click="clearMyCourse">清空我的课程</span>
-
+    <div id="myCourse">
+        <span>我的课程有以下这些</span>
         <el-row>
-            <el-tooltip effect="dark" placement="right"
-                        v-for="item in cartList"
-                        :key="item.id">
-                <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
-                <p slot="content" style="font-size: 13px;margin-bottom: 6px">
-                    <span>{{item.teacherName}}</span> /
-                    <span>{{item.price}}</span> /
-                    <span>{{item.buyCount}}</span>
-                </p>
-                <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
-                <el-card style="width: 300px;margin-bottom: 20px;height: 290px;float: left;margin-right: 15px" class="book"
-                         bodyStyle="padding:10px" shadow="hover">
-                    <div class="cover" @click="goCourseDetailPage(item.id)">
-                        <img :src="item.cover" alt="封面">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a href="">{{item.title}}</a>
+            <!--<el-col :span="8" v-for="(item, index) in cartList" :key="item" :offset="index">-->
+            <div style="display: inline;" v-for="item in cartList">
+                <el-card class="card" :body-style="{ padding: '0px' }" style="width: 200px;margin-bottom: 20px;height: 200px;float: left;margin-right: 15px">
+                    <img :src="item.cover" class="image" @click="goCourseDetailPage(item.id)">
+                    <div>
+                        <span>{{item.title}}</span>
+                        <div class="bottom clearfix">
+                            <span class="time">付费数：{{ item.buyCount }}</span>
+                            <el-button type="text" class="button" @click="removeOneFromCart(item.id)">移出我的课程</el-button>
                         </div>
                     </div>
-                    <div class="author">{{item.teacherName}}</div>
                 </el-card>
-            </el-tooltip>
-        </el-row>
-
-        <el-row>
-            <el-pagination
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="[1,2,3,4,5,6,7,8]"
-                    :page-size="pagesize"
-                    :total="cartList.length">
-            </el-pagination>
+            </div>
+            <!--</el-col>-->
         </el-row>
     </div>
 </template>
 
 <script>
     import  {mapGetters} from 'vuex'
+    import usercenter from "@/api/usercenter";
     export default {
         name: "index",
         data() {
@@ -58,11 +38,45 @@
         },*/
         created() {
             this.cartList = this.$store.state.cartList
+            this.getMyCourseList(this.$store.state.storeId)
         },
         methods: {
+            getMyCourseList(id) {
+              usercenter.getMyCourseList(id)
+                .then(resp => {
+                    //console.log(resp.data.data)
+                    this.cartList = resp.data.data.myEduCourseList
+                })
+            },
+            //清空购物车
             clearMyCourse() {
                 this.$store.commit('clearCart')
                 console.log("清空执行了")
+            },
+            //移除一门课程
+            removeOneFromCart(id) {
+                usercenter.removeOneFromMyCourse(id)
+                  .then(resp => {
+                      if(resp.data.code === 20000){
+                          this.getMyCourseList(this.$store.state.storeId)
+                          return this.$message({
+                              type: 'success',
+                              message: '移出成功'
+                          })
+                      }else {
+                          return this.$message({
+                              type: 'error',
+                              message: '服务异常'
+                          })
+                      }
+
+                  })
+                  .catch(resp => {
+                      return this.$message({
+                          type: 'error',
+                          message: '服务异常'
+                      })
+                  })
             },
             goCourseDetailPage(id){
                 this.$router.push({path:'/course/'+id})
@@ -72,7 +86,47 @@
 </script>
 
 <style scoped>
-    .cover {
+    /*新卡片样式 开始*/
+    /*.card {
+        width: 200px;
+        height: 200px;
+    }*/
+
+    .time {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .bottom {
+        margin-top: 5px;
+        line-height: 12px;
+    }
+
+    .button {
+        padding: 0;
+        float: right;
+    }
+
+    .image {
+        width: 200px;
+        height: 150px;
+       /* display: block;*/
+    }
+
+    /*.clearfix:before,
+    .clearfix:after {
+        display: table;
+        content: "";
+    }
+
+    .clearfix:after {
+        clear: both
+    }*/
+
+    /*新卡片样式 结束*/
+
+/*旧卡片样式*/
+   /* .cover {
         width: 200px;
         height: 200px;
         margin-bottom: 7px;
@@ -83,7 +137,7 @@
     img {
         width: 200px;
         height: 200px;
-        /*margin: 0 auto;*/
+        !*margin: 0 auto;*!
     }
 
     .title {
@@ -111,4 +165,6 @@
     a:link, a:visited, a:focus {
         color: #3377aa;
     }
+*/
+
 </style>

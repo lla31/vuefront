@@ -1,6 +1,13 @@
 import request from '../network/request'
 
 export default {
+    //分页 所有文章
+    getArticlePageList(page,limit) {
+        return request({
+            url: '/edu_articleservice/edu-article/getArticlePageList/'+page+'/'+limit,
+            method: 'get'
+        })
+    },
     //查询所有文章
     getAllarticleList() {
         return request({
@@ -43,6 +50,21 @@ export default {
         return request({
             url: '/edu_articleservice/edu-two-comment/deleteTwoComment/'+twoCommentId,
             method: 'delete',
+        })
+    },
+    //发布文章，个人用户添加文章
+    addArticle(article){
+        return request({
+            url: '/edu_articleservice/edu-article/addArticle',
+            method: 'post',
+            data: article
+        })
+    },
+    //根据用户id查询用户自己的文章
+    getMyArticleById(userId){
+        return request({
+            url: '/edu_articleservice/edu-article/getMyArticleById/'+userId,
+            method: 'get',
         })
     }
 }

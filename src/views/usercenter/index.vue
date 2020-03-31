@@ -1,6 +1,5 @@
 <template>
     <div>
-      <h1>用户中心</h1>
       <span>storeId:{{$store.state.storeId}}</span>
       <el-container>
 
@@ -21,7 +20,7 @@
               <el-submenu index="2">
                 <template slot="title">文章控制台</template>
                 <el-menu-item index="/usercenter/myarticle">我的文章</el-menu-item>
-                <el-menu-item index="2-2">选项2</el-menu-item>
+                <el-menu-item index="/usercenter/publishcontent">发布内容</el-menu-item>
                 <el-menu-item index="2-3">选项3</el-menu-item>
                 <el-submenu index="2-4">
                   <template slot="title">选项4</template>

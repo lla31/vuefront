@@ -5,14 +5,11 @@
       <el-row>
         <el-col :span="10" :offset="3">
           <el-form :model="user"   label-width="100px" class="demo-ruleForm">
-            <el-form-item label="登录名" >
-              <el-input v-model="user.username"></el-input>
+            <el-form-item label="登录名">
+              <el-input v-model="user.username" disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-input v-model="user.password"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="user.email"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="updateUserById()">立即修改</el-button>
@@ -27,11 +24,10 @@
 </template>
 
 <script>
-  import Usercenter from "@/views/usercenter/_id.vue"
   import login from "@/api/login"
     export default {
         name: "index",
-      components: { Usercenter},
+      components: {},
       data() {
         return {
           user: {

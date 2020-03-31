@@ -2,23 +2,33 @@
     <div>
         <!--banner 开始-->
         <!-- slides -->
-        <swiper class="swiper" :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+        <!--<swiper class="swiper" :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
             <swiper-slide v-for='item of swiperList' :key="item.id">
                 <img :src="item.imgUrl" class="swiper-img">
             </swiper-slide>
-        <!-- Optional controls -->
-        <!-- 如果需要分页器 -->
+        &lt;!&ndash; Optional controls &ndash;&gt;
+        &lt;!&ndash; 如果需要分页器 &ndash;&gt;
         <div class="swiper-pagination"  slot="pagination"></div>
-        <!-- 如果需要导航按钮 -->
+        &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;
         <div class="swiper-button-prev" slot="button-prev" @click="prev"></div>
         <div class="swiper-button-next" slot="button-next" @click="next"></div>
-
-        </swiper>
+        </swiper>-->
         <!--banner 结束-->
+
+        <!--element轮播图-->
+        <el-carousel :interval="2000" type="card" height="200px"
+                     :autoplay="true">
+            <el-carousel-item v-for="item in elswiperList" :key="index">
+                <!--<h3 class="medium">{{ item }}</h3>-->
+                <el-image :src="item.lunbotuImgurl"></el-image>
+            </el-carousel-item>
+        </el-carousel>
+        <!--element轮播图-->
     </div>
 </template>
 
 <script>
+    import admin from "../../api/admin";
     export default {
         name: "index",
         computed: {
@@ -28,6 +38,18 @@
         },
         data: function () {
             return {
+                //element轮播图
+                /*"https://i.loli.net/2020/03/19/H82sZxPe4tafyAh.png",
+                "https://i.loli.net/2020/03/23/uiWcdDeX1V6vH9N.png",
+                "https://i.loli.net/2020/03/23/Kc2IWnglfCRiawm.png",
+                "https://i.loli.net/2020/03/26/bOySBNXYxr9WQGh.png"*/
+                /*"http://lla.oss-cn-beijing.aliyuncs.com/2020/03/29/avatar/d0d5b93f-8d6a-4714-a4e7-90347dcb3f59jiangzuo.png",
+                "http://lla.oss-cn-beijing.aliyuncs.com/2020/03/29/avatar/8b1be9b9-bae2-4b15-8cd4-640e4722d012jiaoshi.png",
+                "http://lla.oss-cn-beijing.aliyuncs.com/2020/03/29/avatar/21e9c3a4-4351-4b0d-95cf-a074d9150d65xiaochengxu.png",
+                "http://lla.oss-cn-beijing.aliyuncs.com/2020/03/29/avatar/170ab2bd-58ab-4bda-afe8-433a04517a47Snipaste_2020-03-29_18-15-16.png"*/
+                elswiperList:[],
+
+                //awecome-vue轮播图组件
                 swiperList:[{
                     id:"1",
                     imgUrl:"https://i.loli.net/2020/03/19/H82sZxPe4tafyAh.png"
@@ -65,7 +87,16 @@
 
             }
         },
+        created() {
+            this.getLunbotuList()
+        },
         methods:{
+            getLunbotuList(){
+                admin.getLunbotu()
+                    .then(resp => {
+                        this.elswiperList = resp.data.data.lunbotuList
+                    })
+            },
             prev() {
                 this.swiper.slideTo(1);
             },
@@ -86,4 +117,12 @@
          height: 300px;
          width: 80%;
      }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
 </style>

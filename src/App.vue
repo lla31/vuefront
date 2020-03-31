@@ -2,7 +2,9 @@
   <div id="app">
     <Default1/>
     <router-view></router-view>
-    <Commonfoot/>
+
+      <Commonfoot/>
+
   </div>
 </template>
 
